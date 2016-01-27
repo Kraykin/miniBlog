@@ -1,25 +1,27 @@
 <h4>Post details:</h4>
 <br />
 <p>
-	<%= @row['content'] %>
+	<%= @row['post'] %>
 	<br /><br />
-	Addet at <%= @row['created_date'] %>
+	<span style="font-size: 75%; color: #999"><%= @row['username'] %> wrote <%= @row['created_date'] %></span>
 </p>
 <br />
+<hr />
 <h4>Comments:</h4>
 <br />
 <% @comments.each do |comments| %>
 	<p>
-		<%= comments['content'] %>
+		<%= comments['comment'] %>
 		<br />
-		<span style="font-size: 75%; color: #999">Addet at <%= comments['created_date'] %></span>
+		<span style="font-size: 75%; color: #999"><%= comments['username'] %> wrote <%= comments['created_date'] %></span>
 	</p>
-	<hr />
 <% end %>
 <br />
 <p>
 	<form action="/post/<%= @row['id'] %>" method="POST" role="form">
-		<textarea name="content" class="form-control" rows="6" style="width: 600px" placeholder="Type comment text here"></textarea>
+		<input name="username" type="text" class="form-control" style="width: 600px" placeholder="Enter username">
+		<br />
+		<textarea name="comment" class="form-control" rows="6" style="width: 600px" placeholder="Type comment text here"></textarea>
 		<br />
 		<button type="submit" class="btn btn-primary">Add comment</button>
 	</form>

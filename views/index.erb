@@ -2,9 +2,9 @@
 <br />
 <% @results.each do |posts| %>
 	<p>
-		<%= posts['content'] %>
+		<%= posts['post'] %>
 		<br /><br />
-		Addet at <%= posts['created_date'] %>
+		<span style="font-size: 75%; color: #999"><%= posts['username'] %> wrote <%= posts['created_date'] %></span>
 		<a href="/post/<%= posts['id'] %>">Comments</a>
 	</p>
 	<hr />

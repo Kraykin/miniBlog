@@ -19,14 +19,16 @@ configure do
 		(
 			"id" INTEGER PRIMARY KEY  AUTOINCREMENT  UNIQUE,
 			created_date DATE,
-			content TEXT
+			username TEXT,
+			post TEXT
 		)'
 	@db.execute 'CREATE  TABLE IF NOT EXISTS Comments
 		(
 			"id" INTEGER PRIMARY KEY  AUTOINCREMENT  UNIQUE,
 			post_id INTEGER,
 			created_date DATE,
-			content TEXT
+			username TEXT,
+			comment TEXT
 		)'
 end
 
@@ -41,9 +43,10 @@ get '/new' do
 end
 
 post '/new' do
-	content = params[:content]
+	post = params[:post]
+	username = params[:username]
 
-	if content.length <= 0
+	if post.length <= 0
 		@error = 'Type post text'
 		return erb :new
 	end
@@ -51,9 +54,10 @@ post '/new' do
 	@db.execute 'INSERT INTO Posts
 		(
 			created_date,
-			content
+			username,
+			post
 		)
-		VALUES ( datetime(), ? )', [content]
+		VALUES ( datetime(), ?, ? )', [username, post]
 
 	redirect to '/'
 end
@@ -71,9 +75,10 @@ end
 
 post '/post/:post_id' do
 	post_id = params[:post_id]
-	content = params[:content]
+	comment = params[:comment]
+	username = params[:username]
 	
-	if content.length <= 0
+	if comment.length <= 0
 		@error = 'Type comment text'
 		redirect to('/post/' + post_id)
 	end
@@ -82,9 +87,10 @@ post '/post/:post_id' do
 		(
 			post_id,
 			created_date,
-			content
+			username,
+			comment
 		)
-		VALUES ( ?, datetime(), ? )', [post_id, content]
+		VALUES ( ?, datetime(), ?, ? )', [post_id, username, comment]
 
 	redirect to('/post/' + post_id)
 
