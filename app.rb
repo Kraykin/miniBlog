@@ -43,9 +43,9 @@ get '/new' do
 end
 
 post '/new' do
-	@post = params[:post]
 	@username = params[:username]
-
+	@post = params[:post]
+	
 	hh = { :username => "Type your username", 
 		   :post => "Type post text" }
 
@@ -79,11 +79,15 @@ end
 
 post '/post/:post_id' do
 	post_id = params[:post_id]
-	comment = params[:comment]
 	username = params[:username]
-	
-	if comment.length <= 0
-		@error = 'Type comment text'
+	comment = params[:comment]
+		
+	hh = { :username => "Type your username", 
+		   :comment => "Type comment text" }
+
+	@error = hh.select {|key,_| params[key] == ""}.values.join(", ")
+
+	if @error != ''
 		redirect to('/post/' + post_id)
 	end
 
