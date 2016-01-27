@@ -72,6 +72,11 @@ end
 post '/post/:post_id' do
 	post_id = params[:post_id]
 	content = params[:content]
+	
+	if content.length <= 0
+		@error = 'Type comment text'
+		redirect to('/post/' + post_id)
+	end
 
 	@db.execute 'INSERT INTO Comments
 		(
