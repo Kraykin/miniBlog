@@ -48,6 +48,5 @@ post '/new' do
 		)
 		VALUES ( datetime(), ? )', [content]
 
-
-	erb "<p>You typed:<br>#{content}</p>"
+	redirect to '/'
 end
