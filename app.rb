@@ -49,5 +49,5 @@ post '/new' do
 		VALUES ( datetime(), ? )', [content]
 
 
-	erb "<pre>You typed:\n#{content}</pre>"
+	erb "<p>You typed:<br>#{content}</p>"
 end
