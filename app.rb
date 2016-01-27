@@ -43,11 +43,15 @@ get '/new' do
 end
 
 post '/new' do
-	post = params[:post]
-	username = params[:username]
+	@post = params[:post]
+	@username = params[:username]
 
-	if post.length <= 0
-		@error = 'Type post text'
+	hh = { :username => "Type your username", 
+		   :post => "Type post text" }
+
+	@error = hh.select {|key,_| params[key] == ""}.values.join(", ")
+
+	if @error != ''
 		return erb :new
 	end
 
@@ -57,7 +61,7 @@ post '/new' do
 			username,
 			post
 		)
-		VALUES ( datetime(), ?, ? )', [username, post]
+		VALUES ( datetime(), ?, ? )', [@username, @post]
 
 	redirect to '/'
 end
